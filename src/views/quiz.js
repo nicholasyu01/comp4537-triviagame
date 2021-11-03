@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { Container, Button, Typography } from "@mui/material";
 
+// Component for a Quiz. Has states for current question in the quiz, a boolean for 
+// if a quiz (game) is over, quiz score, quiz id, and a list of all quiz questions.
 export default function Quiz(props) {
     // const questions = [
     //     {
@@ -16,25 +18,27 @@ export default function Quiz(props) {
     // ];
 
     const [currentQuestion, setCurrentQuestion] = useState(0);
-    const [isEndGame, setIsEndGame] = useState(false);
+    const [isEndQuiz, setIsEndQuiz] = useState(false);
     const [score, setScore] = useState(0);
     const { ...rest } = props;
     const [id, setId] = useState(rest.match.params.id);
     const [questions, setQuestions] = useState([])
 
+    // If question is correct, increment score by one and set current question to next question. 
+    // If no next question, end game.
     const handleAnswerOptionClick = (isCorrect) => {
         if (isCorrect) {
             setScore(score + 1);
         }
-
         const nextQuestion = currentQuestion + 1;
         if (nextQuestion < questions.length) {
             setCurrentQuestion(nextQuestion);
         } else {
-            setIsEndGame(true);
+            setIsEndQuiz(true);
         }
     };
 
+    // On page load, set questions for selected quiz.
     useEffect(() => {
         axios.get('http://localhost:5000/api/question/game/' + id)
             .then(questions => {
@@ -45,14 +49,13 @@ export default function Quiz(props) {
             })
     }, []);
 
+    // Returned component.
     return (
         <Container>
-
             <Typography className="score-section">
                 score {score} out of {questions?.length}
             </Typography>
-
-            {isEndGame ? null :
+            {isEndQuiz ? null :
                 <>
                     <Typography className="question-section">
                         <div className="question-count">

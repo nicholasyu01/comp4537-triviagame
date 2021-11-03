@@ -4,9 +4,13 @@ import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
+// Component for Editing Quiz
 export default function Edit() {
+
+    // History
     const history = useHistory();
 
+    // IN PROGRESS
     const onSubmit = (event) => {
         event.preventDefault()
         const data = {
@@ -23,6 +27,8 @@ export default function Edit() {
             })
             .catch((err) => console.log(err));
     }
+
+    // Returns edit component
     return (
         <Container>
             <Typography>Edit</Typography>

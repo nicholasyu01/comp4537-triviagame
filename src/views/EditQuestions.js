@@ -4,11 +4,14 @@ import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
+// Component for editing questions page.
 export default function EditQuestions(props) {
     const { ...rest } = props;
 
     const history = useHistory();
 
+    // On submit, new values are posted to the add game API.
+    // (IS THIS ENDPOINT CORRECT?)
     const onSubmit = (event) => {
         event.preventDefault()
         const data = {
@@ -43,6 +46,8 @@ export default function EditQuestions(props) {
             })
             .catch((err) => console.log(err));
     }
+
+    // Returns EditQuestions container.
     return (
         <Container>
             <Typography>Edit questions</Typography>
