@@ -13,6 +13,7 @@ export default function TriviaGame() {
             <Typography>Trivia Game</Typography>
             <Button onClick={() => history.push('/play')} variant="contained">Play</Button>
             <Button onClick={() => history.push('/create')} variant="contained">Create</Button>
+            <Button onClick={() => history.push('/edit')} variant="contained">Edit</Button>
         </Container>
     );
 }
