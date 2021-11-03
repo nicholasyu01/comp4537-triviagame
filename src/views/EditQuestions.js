@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Container, Button, Typography } from "@mui/material";
+import React, { useState, useEffect } from 'react';
+import { Container, Button, Typography, List, ListItem, ListItemText } from "@mui/material";
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
@@ -7,6 +7,8 @@ import { useHistory } from 'react-router-dom';
 // Component for editing questions page.
 export default function EditQuestions(props) {
     const { ...rest } = props;
+    const [questions, setQuestions] = useState([]);
+    const [gameId, setGameId] = useState(rest.match.params.id);
 
     const history = useHistory();
 
@@ -15,7 +17,7 @@ export default function EditQuestions(props) {
     const onSubmit = (event) => {
         event.preventDefault()
         const data = {
-            gameId: rest.match.params.id,
+            gameId: gameId,
             question: event.target.question.value,
             options: [
                 {
@@ -47,10 +49,33 @@ export default function EditQuestions(props) {
             .catch((err) => console.log(err));
     }
 
+    // On load, sets quizzes in list onto the component's list.
+    useEffect(() => {
+        axios.get('http://localhost:5000/api/question/game/' + gameId)
+            .then(q => {
+                setQuestions(q.data)
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }, []);
+
     // Returns EditQuestions container.
     return (
         <Container>
             <Typography>Edit questions</Typography>
+            <List >
+                {questions?.map((row, key) => (
+                    <ListItem key={key}>
+                        <ListItemText
+                            primary={row.question}
+                        />
+                        {row.options.map((row) => (
+                            <ListItemText>{row.answer}</ListItemText>
+                        ))}
+                    </ListItem>
+                ))}
+            </List>
             <form onSubmit={onSubmit} id="gameForm">
                 <div >
                     <TextField
