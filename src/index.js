@@ -1,17 +1,39 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import { createBrowserHistory } from "history";
+import { Router, Route, Switch, Redirect } from "react-router-dom";
+
+import Quiz from './views/quiz';
+import TriviaGame from './views/TriviaGame';
+import Play from './views/Play';
+import Create from './views/Create';
+import Edit from './views/Edit';
+import EditQuestions from './views/EditQuestions';
+
+const hist = createBrowserHistory();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  <Router history={hist}>
+    <Switch>
+      <Route path="/TriviaGame">
+        <TriviaGame />
+      </Route>
+      <Route path="/play">
+        <Play />
+      </Route>
+      <Route path="/create">
+        <Create />
+      </Route>
+      <Route path="/quiz/:id" render={(props) => <Quiz {...props} />}>
+      </Route>
+      <Route path="/edit/" render={(props) => <Edit {...props} />}>
+      </Route>
+      <Route path="/questions/:id" render={(props) => <EditQuestions {...props} />}>
+      </Route>
+      <Route path="/edit/:id" render={(props) => <Edit {...props} />}>
+      </Route>
+      <Redirect from="/" to="/TriviaGame" />
+    </Switch>
+  </Router>,
+  document.getElementById("root")
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
