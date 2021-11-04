@@ -10,6 +10,7 @@ import Create from './views/Create';
 import Edit from './views/Edit';
 import EditGame from './views/EditGame';
 import EditQuestions from './views/EditQuestions';
+import UpdateQuestion from './views/UpdateQuestion';
 
 const hist = createBrowserHistory();
 
@@ -32,6 +33,7 @@ ReactDOM.render(
       <Route path="/quiz/:id" render={(props) => <Quiz {...props} />}></Route>
       <Route path="/edit/" render={(props) => <EditGame {...props} />}></Route>
       <Route path="/questions/:id" render={(props) => <EditQuestions {...props} />}></Route>
+      <Route path="/updateQuestion/:id" render={(props) => <UpdateQuestion {...props} />}></Route>
       <Route path="/edit/:id" render={(props) => <Edit {...props} />}></Route>
       <Redirect from="/" to="/TriviaGame" />
     </Switch>
