@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Button, Typography, List, ListItem, ListItemText, Checkbox } from "@mui/material";
+import {
+    Container, Button, Typography, List, ListItem, ListItemText, Checkbox,
+    Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions
+} from "@mui/material";
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+
 
 // Component for editing questions page.
 export default function EditQuestions(props) {
@@ -16,6 +20,29 @@ export default function EditQuestions(props) {
         d: false
     });
     const { a, b, c, d } = options;
+    const [deleteDialog, setDeleteDialog] = useState(false);
+    const [deleteQuestion, setDeleteQuestion] = useState([]);
+
+    const handleClose = () => {
+        setDeleteDialog(false);
+    };
+
+    const handleDelete = () => {
+        axios.delete('http://localhost:5000/api/question/' + deleteQuestion?._id)
+            .then(q => {
+                axios.get('http://localhost:5000/api/question/game/' + gameId)
+                    .then(q => {
+                        setQuestions(q.data)
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+        setDeleteDialog(false);
+    };
 
     const history = useHistory();
 
@@ -119,6 +146,16 @@ export default function EditQuestions(props) {
                         >
                             Edit
                         </Button>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            onClick={() => {
+                                setDeleteQuestion(row);
+                                setDeleteDialog(true);
+                            }}
+                        >
+                            Delete
+                        </Button>
                     </ListItem>
                 ))}
             </List>
@@ -162,6 +199,23 @@ export default function EditQuestions(props) {
                     Create Question
                 </Button>
             </form>
+            <Dialog
+                open={deleteDialog}
+                keepMounted
+                onClose={handleClose}
+                aria-describedby="alert-dialog-slide-description"
+            >
+                <DialogTitle>{"Are you sure you want to delete this question?"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-slide-description">
+                        Question: {deleteQuestion?.question}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Close</Button>
+                    <Button onClick={handleDelete}>Delete</Button>
+                </DialogActions>
+            </Dialog>
         </Container>
     );
 }
