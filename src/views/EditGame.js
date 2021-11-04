@@ -19,7 +19,7 @@ export default function EditGame() {
         axios.post('http://localhost:5000/api/game/add', data)
             .then(game => {
                 if (game) {
-                    history.push('/edit/questions/' + game.data._id)
+                    history.push('/questions/' + game.data._id)
                     console.log('success')
                 } else {
                     console.log('fail')

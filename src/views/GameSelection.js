@@ -94,7 +94,7 @@ export default function GameSelection(props) {
             {
                 editMode ?
                     <div>
-                        <Button onClick={() => history.push('/edit')} variant="contained">
+                        <Button onClick={() => history.push('/create')} variant="contained">
                             Create Game
                         </Button>
                         <Button
