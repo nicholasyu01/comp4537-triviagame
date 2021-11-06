@@ -13,6 +13,7 @@ export default function EditQuestions(props) {
     const { ...rest } = props;
     const [questions, setQuestions] = useState([]);
     const [gameId, setGameId] = useState(rest.match.params.id);
+    const [gameName, setGameName] = useState();
     const [options, setOptions] = useState({
         a: false,
         b: false,
@@ -22,6 +23,7 @@ export default function EditQuestions(props) {
     const { a, b, c, d } = options;
     const [deleteDialog, setDeleteDialog] = useState(false);
     const [deleteQuestion, setDeleteQuestion] = useState([]);
+    const [updateGameResult, setUpdateGameResult] = useState();
 
     const handleClose = () => {
         setDeleteDialog(false);
@@ -97,6 +99,22 @@ export default function EditQuestions(props) {
             .catch((err) => console.log(err));
     }
 
+    const submitGame = (event) => {
+        event.preventDefault()
+        const data = {
+            gameName: event.target.gameName.value
+        }
+        axios.put('http://localhost:5000/api/game/' + gameId, data,)
+            .then(game => {
+                if (game) {
+                    setUpdateGameResult(true);
+                } else {
+                    setUpdateGameResult(false);
+                    console.log('fail')
+                }
+            })
+            .catch((err) => console.log(err));
+    }
     const handleChange = (event) => {
         setOptions({
             ...options,
@@ -113,12 +131,39 @@ export default function EditQuestions(props) {
             .catch(function (error) {
                 console.log(error);
             })
+        axios.get('http://localhost:5000/api/game/' + gameId)
+            .then(game => {
+                setGameName(game.data.gameName);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
     }, []);
 
     // Returns EditQuestions container.
     return (
         <Container>
             <Typography>Edit questions</Typography>
+            <form onSubmit={submitGame} id="gameForm">
+                <div>
+                    <TextField
+                        id="gameName"
+                        label="Game Name"
+                        value={gameName}
+                        InputLabelProps={{ shrink: true }}
+                    />
+                </div>
+                <Button
+                    type="submit"
+                    variant="contained"
+                >
+                    Update Game
+                </Button>
+                {updateGameResult ?
+                    <div>success</div> :
+                    null
+                }
+            </form>
             <List >
                 {questions?.map((row, key) => (
                     <ListItem key={key}>

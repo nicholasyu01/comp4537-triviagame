@@ -1,16 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { DataGrid } from '@mui/x-data-grid';
-import { Container, Button, Typography } from "@mui/material";
+import {
+    Container, Button, Typography, List, ListItem, ListItemText, Checkbox,
+    Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions
+} from "@mui/material";
 import Quiz from "./Quiz";
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
 // Component for selecting quiz. Has states for currently selected quiz and quiz data.
 export default function GameSelection(props) {
-    const [gameSelected, setGameSelected] = useState('');
+    const [gameId, setGameId] = useState('');
+    const [gameName, setGameName] = useState();
     const [gameData, setGameData] = useState([]);
     const history = useHistory();
+    const [deleteDialog, setDeleteDialog] = useState(false);
+    const [deleteQuestion, setDeleteQuestion] = useState([]);
     const { editMode } = props;
+
+    const handleClose = () => {
+        setDeleteDialog(false);
+    };
 
     // Columns for characterizing and organizing quizzes.
     const columns = [
@@ -65,6 +75,21 @@ export default function GameSelection(props) {
         },
     ];
 
+    const handleDelete = () => {
+        axios.delete('http://localhost:5000/api/game/' + gameId)
+            .then(q => {
+                axios.get('http://localhost:5000/api/game')
+                    .then(games => {
+                        setGameData(games.data)
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+                setDeleteDialog(false);
+            })
+    };
+
+
     // On load, sets quizzes in list onto the component's list.
     useEffect(() => {
         axios.get('http://localhost:5000/api/game')
@@ -88,7 +113,8 @@ export default function GameSelection(props) {
                 // loading={true}
                 getRowId={(row) => row._id}
                 onRowClick={(event) => {
-                    setGameSelected(event.id)
+                    setGameId(event.id)
+                    setGameName(event.gameName)
                 }}
             />
             {
@@ -98,22 +124,48 @@ export default function GameSelection(props) {
                             Create Game
                         </Button>
                         <Button
-                            onClick={() => history.push('/questions/' + gameSelected)}
+                            onClick={() => history.push('/questions/' + gameId)}
                             variant="contained"
-                            disabled={!gameSelected}
+                            disabled={!gameId}
                         >
                             Edit Game
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                setDeleteDialog(true);
+                            }}
+                            variant="contained"
+                            disabled={!gameId}
+                        >
+                            Delete Game
                         </Button>
                     </div>
                     :
                     <Button
-                        onClick={() => history.push('/quiz/' + gameSelected)}
+                        onClick={() => history.push('/quiz/' + gameId)}
                         variant="contained"
-                        disabled={!gameSelected}
+                        disabled={!gameId}
                     >
                         Play
                     </Button>
             }
+            <Dialog
+                open={deleteDialog}
+                keepMounted
+                onClose={handleClose}
+                aria-describedby="alert-dialog-slide-description"
+            >
+                <DialogTitle>{"Are you sure you want to delete this Game?"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-slide-description">
+                        Game: {gameName}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Close</Button>
+                    <Button onClick={handleDelete}>Delete</Button>
+                </DialogActions>
+            </Dialog>
         </div >
     );
 }
