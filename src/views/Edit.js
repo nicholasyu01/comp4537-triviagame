@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
-import { Container, Typography } from "@mui/material";
+import { Container, Typography, Box } from "@mui/material";
 import GameSelection from './GameSelection';
 
 // Create Button component.
 export default function Edit() {
 
     return (
-        <Container>
-            <Typography>Edit Game</Typography>
-            <GameSelection editMode={true} />
-        </Container>
+        <div
+            style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+            }}
+        >
+            <Container>
+                <GameSelection editMode={true} />
+            </Container>
+
+        </div>
     );
 }

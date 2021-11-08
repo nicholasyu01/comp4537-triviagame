@@ -12,7 +12,7 @@ export default function TopBar() {
     const history = useHistory();
 
     return (
-        <AppBar position="static" >
+        <AppBar  >
             <Toolbar >
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     <Button

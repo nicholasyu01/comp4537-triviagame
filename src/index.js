@@ -20,7 +20,6 @@ const hist = createBrowserHistory();
 // Renders component based on route.
 ReactDOM.render(
   <Router history={hist}>
-    <CssBaseline />
     <TopBar />
     <Switch>
       <Route path="/TriviaGame">

@@ -1,22 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { Container, Button, Typography } from "@mui/material";
+import { Container, Button, Typography, Box } from "@mui/material";
 
 // Component for a Quiz. Has states for current question in the quiz, a boolean for 
 // if a quiz (game) is over, quiz score, quiz id, and a list of all quiz questions.
 export default function Quiz(props) {
-    // const questions = [
-    //     {
-    //         question: "What is the capital of France?",
-    //         options: [
-    //             { answer: "New York", correct: false },
-    //             { answer: "London", correct: false },
-    //             { answer: "Paris", correct: true },
-    //             { answer: "Dublin", correct: false },
-    //         ],
-    //     },
-    // ];
-
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [isEndQuiz, setIsEndQuiz] = useState(false);
     const [score, setScore] = useState(0);
@@ -51,32 +39,44 @@ export default function Quiz(props) {
 
     // Returned component.
     return (
-        <Container>
-            <Typography className="score-section">
-                score {score} out of {questions?.length}
-            </Typography>
-            {isEndQuiz ? null :
-                <>
-                    <Typography className="question-section">
-                        <div className="question-count">
-                            <span>Question {currentQuestion + 1}</span>/{questions?.length}
-                        </div>
-                        <div className="question-text">
-                            {questions[currentQuestion]?.question}
-                        </div>
-                    </Typography>
-                    <Typography className="answer-section">
-                        {questions[currentQuestion]?.options.map((a) => (
-                            <Button
-                                variant="contained"
-                                onClick={() => handleAnswerOptionClick(a.correct)}
-                            >
-                                {a.answer}
-                            </Button>
-                        ))}
-                    </Typography>
-                </>
-            }
-        </Container>
+        <div
+            style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+            }}
+        >
+            <Container>
+                <Typography className="score-section">
+                    score {score} out of {questions?.length}
+                </Typography>
+                <div>
+                    {
+                        isEndQuiz ? null :
+                            <>
+                                <Typography className="question-section">
+                                    <div className="question-count">
+                                        <span>Question {currentQuestion + 1}</span>/{questions?.length}
+                                    </div>
+                                    <div className="question-text">
+                                        {questions[currentQuestion]?.question}
+                                    </div>
+                                </Typography>
+
+                                <Typography className="answer-section">
+                                    {questions[currentQuestion]?.options.map((a) => (
+                                        <Button
+                                            variant="contained"
+                                            onClick={() => handleAnswerOptionClick(a.correct)}
+                                        >
+                                            {a.answer}
+                                        </Button>
+                                    ))}
+                                </Typography>
+                            </>
+                    }
+                </div>
+            </Container>
+        </div >
     );
 }

@@ -6,9 +6,14 @@ import EditGame from './EditGame';
 export default function Create() {
 
     return (
-        <Container>
-            <Typography>Create</Typography>
+        <div
+            style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+            }}
+        >
             <EditGame editMode={true} />
-        </Container>
+        </div>
     );
 }
