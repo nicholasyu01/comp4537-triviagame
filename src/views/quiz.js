@@ -37,44 +37,80 @@ export default function Quiz(props) {
             })
     }, []);
 
+    const divStyle = {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+    }
+
+    const optionStyle = {
+        justifyContent: "center",
+        alignItems: "center"
+    }
+
+    const optionLetterStyle = {
+        margin: "0",
+        padding: "0",
+        paddingTop: "10px"
+    }
+
+    const buttonDivStyle = {
+        padding: "0",
+        justifyContent: "space-between",
+        display: "flex",
+        marginBottom: "10px"
+    }
+
+    const buttonStyle = {
+        marginLeft: "10px",
+        width: "100%",
+        justifyContent: "left"
+    }
+
     // Returned component.
     return (
-        <div
-            style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center"
-            }}
-        >
+        <div style={divStyle}>
             <Container>
                 <div>
                     {
-                        isEndQuiz 
-                        ? 
-                        <Typography className="score-section">
-                            score {score} out of {questions?.length}
-                         </Typography> 
-                        :
+                        isEndQuiz ? 
+                        <div style={divStyle}>
+                            <Typography 
+                                className="score-section">
+                                Final Score: {score}/{questions?.length}
+                            </Typography> 
+                         </div>
+                         :
                             <>
                                 <Typography className="question-section">
-                                    <div className="question-count">
+                                    <div style={divStyle} className="question-count">
                                         <span>Question {currentQuestion + 1}</span>/{questions?.length}
                                     </div>
-                                    <div className="question-text">
+                                    <div style={divStyle} className="question-text">
                                         {questions[currentQuestion]?.question}
                                     </div>
                                 </Typography>
 
-                                <Typography className="answer-section">
-                                    {questions[currentQuestion]?.options.map((a) => (
-                                        <Button
-                                            variant="contained"
-                                            onClick={() => handleAnswerOptionClick(a.correct)}
-                                        >
-                                            {a.answer}
-                                        </Button>
-                                    ))}
-                                </Typography>
+                                <div style={divStyle}>
+                                    <Typography className="answer-section">
+
+                                        <div style={optionStyle}>
+                                            {questions[currentQuestion]?.options.map((a, index) => (
+                                                <div style={buttonDivStyle}>
+                                                    <p style={optionLetterStyle}>{String.fromCharCode(65 + index)}.</p>
+                                                    <Button
+                                                        style={buttonStyle}
+                                                        variant="contained"
+                                                        onClick={() => handleAnswerOptionClick(a.correct)}
+                                                    >
+                                                        {a.answer}
+                                                    </Button>
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                    </Typography>
+                                </div>
                             </>
                     }
                 </div>
