@@ -47,12 +47,14 @@ export default function Quiz(props) {
             }}
         >
             <Container>
-                <Typography className="score-section">
-                    score {score} out of {questions?.length}
-                </Typography>
                 <div>
                     {
-                        isEndQuiz ? null :
+                        isEndQuiz 
+                        ? 
+                        <Typography className="score-section">
+                            score {score} out of {questions?.length}
+                         </Typography> 
+                        :
                             <>
                                 <Typography className="question-section">
                                     <div className="question-count">

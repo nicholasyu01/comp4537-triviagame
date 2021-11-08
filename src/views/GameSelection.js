@@ -4,7 +4,6 @@ import {
     Container, Button, Typography, List, ListItem, ListItemText, Checkbox,
     Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions
 } from "@mui/material";
-import Quiz from "./Quiz";
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
@@ -128,9 +127,6 @@ export default function GameSelection(props) {
             {
                 editMode ?
                     <div>
-                        <Button onClick={() => history.push('/create')} variant="contained">
-                            Create Game
-                        </Button>
                         <Button
                             onClick={() => history.push('/questions/' + gameId)}
                             variant="contained"

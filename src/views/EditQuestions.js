@@ -49,7 +49,6 @@ export default function EditQuestions(props) {
     const history = useHistory();
 
     // On submit, new values are posted to the add game API.
-    // (IS THIS ENDPOINT CORRECT?)
     const onSubmit = (event) => {
         event.preventDefault()
         const data = {
