@@ -77,7 +77,15 @@ export default function GameSelection(props) {
 
     const handleDelete = () => {
         axios.delete('http://localhost:5000/api/game/' + gameId)
-            .then(q => {
+            .then(game => {
+                // delete questions of the game
+                axios.delete('http://localhost:5000/api/question/game/delete/' + gameId)
+                    .then(q => {
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+                // get game data list
                 axios.get('http://localhost:5000/api/game')
                     .then(games => {
                         setGameData(games.data)
