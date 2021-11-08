@@ -7,6 +7,10 @@ import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
+const QUESTION_ENDPOINT = 'http://localhost:5000/api/question/';
+const QUESTION_ADD_ENDPOINT = 'http://localhost:5000/api/question/add';
+const QUESTION_GAME_ENDPOINT = 'http://localhost:5000/api/question/game/';
+const GAME_ENDPOINT = 'http://localhost:5000/api/game/';
 
 // Component for editing questions page.
 export default function EditQuestions(props) {
@@ -30,9 +34,9 @@ export default function EditQuestions(props) {
     };
 
     const handleDelete = () => {
-        axios.delete('http://localhost:5000/api/question/' + deleteQuestion?._id)
+        axios.delete(QUESTION_ENDPOINT + deleteQuestion?._id)
             .then(q => {
-                axios.get('http://localhost:5000/api/question/game/' + gameId)
+                axios.get(QUESTION_GAME_ENDPOINT + gameId)
                     .then(q => {
                         setQuestions(q.data)
                     })
@@ -73,10 +77,10 @@ export default function EditQuestions(props) {
                 }
             ]
         }
-        axios.post('http://localhost:5000/api/question/add', data)
+        axios.post(QUESTION_ADD_ENDPOINT, data)
             .then(game => {
                 if (game) {
-                    axios.get('http://localhost:5000/api/question/game/' + gameId)
+                    axios.get(QUESTION_GAME_ENDPOINT + gameId)
                         .then(q => {
                             setQuestions(q.data)
                         })
@@ -103,7 +107,7 @@ export default function EditQuestions(props) {
         const data = {
             gameName: event.target.gameName.value
         }
-        axios.put('http://localhost:5000/api/game/' + gameId, data,)
+        axios.put(GAME_ENDPOINT + gameId, data,)
             .then(game => {
                 if (game) {
                     setUpdateGameResult(true);
@@ -127,14 +131,14 @@ export default function EditQuestions(props) {
 
     // On load, sets quizzes in list onto the component's list.
     useEffect(() => {
-        axios.get('http://localhost:5000/api/question/game/' + gameId)
+        axios.get(QUESTION_GAME_ENDPOINT + gameId)
             .then(q => {
                 setQuestions(q.data)
             })
             .catch(function (error) {
                 console.log(error);
             })
-        axios.get('http://localhost:5000/api/game/' + gameId)
+        axios.get(GAME_ENDPOINT + gameId)
             .then(game => {
                 setGameName(game.data.gameName);
             })
