@@ -32,6 +32,13 @@ export default function UpdateQuestion(props) {
         });
     };
 
+    const handeAnswers = (event) => {
+        setAnswers({
+            ...answers,
+            [event.target.id]: event.target.value,
+        });
+    };
+
     // On submit, new values are posted to the add game API.
     const onSubmit = (event) => {
         event.preventDefault()
@@ -40,19 +47,19 @@ export default function UpdateQuestion(props) {
             question: event.target.question.value,
             options: [
                 {
-                    answer: event.target.ans1.value,
+                    answer: event.target.ansA.value,
                     correct: a
                 },
                 {
-                    answer: event.target.ans2.value,
+                    answer: event.target.ansB.value,
                     correct: b
                 },
                 {
-                    answer: event.target.ans3.value,
+                    answer: event.target.ansC.value,
                     correct: c
                 },
                 {
-                    answer: event.target.ans4.value,
+                    answer: event.target.ansD.value,
                     correct: d
                 }
             ]
@@ -117,34 +124,38 @@ export default function UpdateQuestion(props) {
                     <Checkbox checked={a} onChange={handleChecked} name="a" />
                     <TextField
                         // className={classes.formControl}
-                        id="ans1"
+                        id="ansA"
                         label="Answer"
                         value={ansA}
                         InputLabelProps={{ shrink: true }}
+                        onChange={handeAnswers}
                     />
                     <Checkbox checked={b} onChange={handleChecked} name="b" />
                     <TextField
                         // className={classes.formControl}
-                        id="ans2"
+                        id="ansB"
                         label="Answer"
                         value={ansB}
                         InputLabelProps={{ shrink: true }}
+                        onChange={handeAnswers}
                     />
                     <Checkbox checked={c} onChange={handleChecked} name="c" />
                     <TextField
                         // className={classes.formControl}
-                        id="ans3"
+                        id="ansC"
                         label="Answer"
                         value={ansC}
                         InputLabelProps={{ shrink: true }}
+                        onChange={handeAnswers}
                     />
                     <Checkbox checked={d} onChange={handleChecked} name="d" />
                     <TextField
                         // className={classes.formControl}
-                        id="ans4"
+                        id="ansD"
                         label="Answer"
                         value={ansD}
                         InputLabelProps={{ shrink: true }}
+                        onChange={handeAnswers}
                     />
 
                 </div>

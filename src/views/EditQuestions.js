@@ -122,6 +122,10 @@ export default function EditQuestions(props) {
         });
     };
 
+    const handleGameName = (e) => {
+        setGameName(e.target.value)
+    };
+
     // On load, sets quizzes in list onto the component's list.
     useEffect(() => {
         axios.get('http://localhost:5000/api/question/game/' + gameId)
@@ -151,6 +155,7 @@ export default function EditQuestions(props) {
                         label="Game Name"
                         value={gameName}
                         InputLabelProps={{ shrink: true }}
+                        onChange={handleGameName}
                     />
                 </div>
                 <Button

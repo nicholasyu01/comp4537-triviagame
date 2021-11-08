@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 
+import TopBar from './components/TopBar';
+
 import Quiz from './views/Quiz';
 import TriviaGame from './views/TriviaGame';
 import Play from './views/Play';
@@ -11,12 +13,15 @@ import Edit from './views/Edit';
 import EditGame from './views/EditGame';
 import EditQuestions from './views/EditQuestions';
 import UpdateQuestion from './views/UpdateQuestion';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 const hist = createBrowserHistory();
 
 // Renders component based on route.
 ReactDOM.render(
   <Router history={hist}>
+    <CssBaseline />
+    <TopBar />
     <Switch>
       <Route path="/TriviaGame">
         <TriviaGame />
