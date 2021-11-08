@@ -182,16 +182,16 @@ export default function EditQuestions(props) {
                     {questions?.map((row, key) => (
                         <ListItem key={key}>
                             <ListItemText
-                                primary={row.question}
+                                primary={<b>Q. {row.question}</b>}
                             />
 
                             {row.options.map((row) => (
                                 <>
                                     {
                                         row.correct ?
-                                            <ListItemText>correct: {row.answer}</ListItemText>
+                                            <ListItemText><b>&#10004;</b>: <i>{row.answer}</i></ListItemText>
                                             :
-                                            <ListItemText>{row.answer}</ListItemText>
+                                            <ListItemText><b>&#x58;</b>: <i>{row.answer}</i></ListItemText>
 
                                     }
                                 </>

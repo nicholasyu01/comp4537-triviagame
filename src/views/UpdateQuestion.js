@@ -5,6 +5,8 @@ import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import { useHistory } from 'react-router-dom';
 
+const QUESTION_ENDPOINT = 'http://localhost:5000/api/question/';
+
 // Create Button component.
 export default function UpdateQuestion(props) {
     const { ...rest } = props
@@ -32,7 +34,7 @@ export default function UpdateQuestion(props) {
         });
     };
 
-    const handeAnswers = (event) => {
+    const handleAnswers = (event) => {
         setAnswers({
             ...answers,
             [event.target.id]: event.target.value,
@@ -64,7 +66,7 @@ export default function UpdateQuestion(props) {
                 }
             ]
         }
-        axios.put('http://localhost:5000/api/question/' + questionId, data,
+        axios.put(QUESTION_ENDPOINT + questionId, data,
             {
                 headers: {
                     'Access-Control-Allow-Headers': ' Origin, X-Requested-With, Content-Type, Accept',
@@ -88,7 +90,7 @@ export default function UpdateQuestion(props) {
 
     // On load, get question.
     useEffect(() => {
-        axios.get('http://localhost:5000/api/question/' + questionId)
+        axios.get(QUESTION_ENDPOINT + questionId)
             .then(q => {
                 setQuestion(q.data)
                 setOptions({
@@ -134,7 +136,7 @@ export default function UpdateQuestion(props) {
                             label="Answer"
                             value={ansA}
                             InputLabelProps={{ shrink: true }}
-                            onChange={handeAnswers}
+                            onChange={handleAnswers}
                         />
                         <Checkbox checked={b} onChange={handleChecked} name="b" />
                         <TextField
@@ -143,7 +145,7 @@ export default function UpdateQuestion(props) {
                             label="Answer"
                             value={ansB}
                             InputLabelProps={{ shrink: true }}
-                            onChange={handeAnswers}
+                            onChange={handleAnswers}
                         />
                         <Checkbox checked={c} onChange={handleChecked} name="c" />
                         <TextField
@@ -152,7 +154,7 @@ export default function UpdateQuestion(props) {
                             label="Answer"
                             value={ansC}
                             InputLabelProps={{ shrink: true }}
-                            onChange={handeAnswers}
+                            onChange={handleAnswers}
                         />
                         <Checkbox checked={d} onChange={handleChecked} name="d" />
                         <TextField
@@ -161,7 +163,7 @@ export default function UpdateQuestion(props) {
                             label="Answer"
                             value={ansD}
                             InputLabelProps={{ shrink: true }}
-                            onChange={handeAnswers}
+                            onChange={handleAnswers}
                         />
 
                     </div>
