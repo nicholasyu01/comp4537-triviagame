@@ -28,7 +28,7 @@ export default function Quiz(props) {
 
     // On page load, set questions for selected quiz.
     useEffect(() => {
-        axios.get('http://localhost:5000/api/question/game/' + id)
+        axios.get('https://comp4537triviagame-api.herokuapp.com/api/question/game/' + id)
             .then(questions => {
                 setQuestions(questions.data)
             })
