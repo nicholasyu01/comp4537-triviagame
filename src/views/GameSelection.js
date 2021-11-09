@@ -110,13 +110,13 @@ export default function GameSelection(props) {
 
     // Returns the component.
     return (
-        <div style={{ height: 600, width: '100%' }}>
+        <div style={{ height: 400, width: '100%' }}>
             <DataGrid
                 rows={gameData}
                 columns={columns}
                 disableColumnFilter={true}
                 disableColumnMenu={true}
-                // hideFooter={true}
+                hideFooter={true}
                 // loading={true}
                 getRowId={(row) => row._id}
                 onRowClick={(event) => {
