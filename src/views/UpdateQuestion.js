@@ -13,6 +13,7 @@ export default function UpdateQuestion(props) {
     const history = useHistory();
     const [questionId, setQuestionId] = useState(rest.match.params.id);
     const [question, setQuestion] = useState([]);
+    const [questionName, setQuestionName] = useState();
     const [answers, setAnswers] = useState({
         ansA: '',
         ansB: '',
@@ -39,6 +40,9 @@ export default function UpdateQuestion(props) {
             ...answers,
             [event.target.id]: event.target.value,
         });
+    };
+    const handleQuestionName = (event) => {
+        setQuestionName(event.target.value)
     };
 
     // On submit, new values are posted to the add game API.
@@ -93,6 +97,7 @@ export default function UpdateQuestion(props) {
         axios.get(QUESTION_ENDPOINT + questionId)
             .then(q => {
                 setQuestion(q.data)
+                setQuestionName(q.data.question)
                 setOptions({
                     a: q.data.options[0].correct,
                     b: q.data.options[1].correct,
@@ -126,8 +131,9 @@ export default function UpdateQuestion(props) {
                             // className={classes.formControl}
                             id="question"
                             label="Question"
-                            value={question?.question}
+                            value={questionName}
                             InputLabelProps={{ shrink: true }}
+                            onChange={handleQuestionName}
                         />
                         <Checkbox checked={a} onChange={handleChecked} name="a" />
                         <TextField

@@ -73,16 +73,17 @@ export default function Quiz(props) {
             <Container>
                 <div>
                     {
-                        isEndQuiz ? 
-                        <div style={divStyle}>
-                            <Typography 
-                                className="score-section">
-                                Final Score: {score}/{questions?.length}
-                            </Typography> 
-                         </div>
-                         :
+                        isEndQuiz ?
+                            <div style={divStyle}>
+                                <Typography
+                                    variant="h4"
+                                    className="score-section">
+                                    Final Score: {score}/{questions?.length}
+                                </Typography>
+                            </div>
+                            :
                             <>
-                                <Typography className="question-section">
+                                <Typography variant="h5" className="question-section">
                                     <div style={divStyle} className="question-count">
                                         <span>Question {currentQuestion + 1}</span>/{questions?.length}
                                     </div>
@@ -92,7 +93,7 @@ export default function Quiz(props) {
                                 </Typography>
 
                                 <div style={divStyle}>
-                                    <Typography className="answer-section">
+                                    <Typography variant="h5" className="answer-section">
 
                                         <div style={optionStyle}>
                                             {questions[currentQuestion]?.options.map((a, index) => (
