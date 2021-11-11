@@ -82,26 +82,33 @@ export default function Quiz(props) {
                         <>
                             {
                                 isEndQuiz ?
-                                    <div style={divStyle}>
+                                    <div style={{
+                                        display: 'flex', flexDirection: 'column', justifyContent: "center",
+                                        alignItems: "center"
+                                    }}>
                                         <Typography
                                             variant="h4"
                                             className="score-section">
                                             Final Score: {score}/{questions?.length}
                                         </Typography>
-                                        <Button
-                                            color="primary"
-                                            variant="contained"
-                                            onClick={() => history.push('/TriviaGame')}
-                                        >
-                                            Home
-                                        </Button>
-                                        <Button
-                                            color="primary"
-                                            variant="contained"
-                                            onClick={() => history.go(0)}
-                                        >
-                                            Play Again
-                                        </Button>
+                                        <div>
+                                            <Button
+                                                color="primary"
+                                                variant="contained"
+                                                onClick={() => history.push('/TriviaGame')}
+                                                style={{ margin: 5 }}
+                                            >
+                                                Home
+                                            </Button>
+                                            <Button
+                                                color="primary"
+                                                variant="contained"
+                                                onClick={() => history.go(0)}
+                                            >
+                                                Play Again
+                                            </Button>
+
+                                        </div>
 
                                     </div>
                                     :
