@@ -225,37 +225,48 @@ export default function EditQuestions(props) {
                         ))}
                     </List>
                     <form onSubmit={onSubmit} id="questionsForm">
-                        <div>
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
                             <TextField
                                 // className={classes.formControl}
                                 id="question"
                                 label="Question"
                             />
-                            <Checkbox checked={a} onChange={handleChange} name="a" />
-                            <TextField
-                                // className={classes.formControl}
-                                id="ans1"
-                                label="Answer"
-                            />
-                            <Checkbox checked={b} onChange={handleChange} name="b" />
-                            <TextField
-                                // className={classes.formControl}
-                                id="ans2"
-                                label="Answer"
-                            />
-                            <Checkbox checked={c} onChange={handleChange} name="c" />
-                            <TextField
-                                // className={classes.formControl}
-                                id="ans3"
-                                label="Answer"
-                            />
-                            <Checkbox checked={d} onChange={handleChange} name="d" />
-                            <TextField
-                                // className={classes.formControl}
-                                id="ans4"
-                                label="Answer"
-                            />
-
+                            <div style={{ flexDirection: 'row' }}>
+                                <Checkbox checked={a} onChange={handleChange} name="a" />
+                                <TextField
+                                    // className={classes.formControl}
+                                    id="ans1"
+                                    label="Answer"
+                                    style={{ width: '80%' }}
+                                />
+                            </div>
+                            <div style={{ flexDirection: 'row' }}>
+                                <Checkbox checked={b} onChange={handleChange} name="b" />
+                                <TextField
+                                    // className={classes.formControl}
+                                    id="ans2"
+                                    label="Answer"
+                                    style={{ width: '80%' }}
+                                />
+                            </div>
+                            <div style={{ flexDirection: 'row' }}>
+                                <Checkbox checked={c} onChange={handleChange} name="c" />
+                                <TextField
+                                    // className={classes.formControl}
+                                    id="ans3"
+                                    label="Answer"
+                                    style={{ width: '80%' }}
+                                />
+                            </div>
+                            <div style={{ flexDirection: 'row' }}>
+                                <Checkbox checked={d} onChange={handleChange} name="d" />
+                                <TextField
+                                    // className={classes.formControl}
+                                    id="ans4"
+                                    label="Answer"
+                                    style={{ width: '80%' }}
+                                />
+                            </div>
                         </div>
                         <Button
                             type="submit"

@@ -132,52 +132,63 @@ export default function UpdateQuestion(props) {
 
                 <Container>
                     <form onSubmit={onSubmit} id="questionsForm">
-                        <div>
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
                             <TextField
-                                // className={classes.formControl}
                                 id="question"
                                 label="Question"
                                 value={questionName}
                                 InputLabelProps={{ shrink: true }}
                                 onChange={handleQuestionName}
-                            />
-                            <Checkbox checked={a} onChange={handleChecked} name="a" />
-                            <TextField
-                                // className={classes.formControl}
-                                id="ansA"
-                                label="Answer"
-                                value={ansA}
-                                InputLabelProps={{ shrink: true }}
-                                onChange={handleAnswers}
-                            />
-                            <Checkbox checked={b} onChange={handleChecked} name="b" />
-                            <TextField
-                                // className={classes.formControl}
-                                id="ansB"
-                                label="Answer"
-                                value={ansB}
-                                InputLabelProps={{ shrink: true }}
-                                onChange={handleAnswers}
-                            />
-                            <Checkbox checked={c} onChange={handleChecked} name="c" />
-                            <TextField
-                                // className={classes.formControl}
-                                id="ansC"
-                                label="Answer"
-                                value={ansC}
-                                InputLabelProps={{ shrink: true }}
-                                onChange={handleAnswers}
-                            />
-                            <Checkbox checked={d} onChange={handleChecked} name="d" />
-                            <TextField
-                                // className={classes.formControl}
-                                id="ansD"
-                                label="Answer"
-                                value={ansD}
-                                InputLabelProps={{ shrink: true }}
-                                onChange={handleAnswers}
-                            />
 
+                            />
+                            <div style={{ flexDirection: 'row' }}>
+                                <Checkbox checked={a} onChange={handleChecked} name="a" />
+                                <TextField
+                                    id="ansA"
+                                    label="Answer"
+                                    value={ansA}
+                                    InputLabelProps={{ shrink: true }}
+                                    onChange={handleAnswers}
+                                    style={{ width: '80%' }}
+                                />
+                            </div>
+                            <div style={{ flexDirection: 'row' }}>
+
+                                <Checkbox checked={b} onChange={handleChecked} name="b" />
+                                <TextField
+                                    id="ansB"
+                                    label="Answer"
+                                    value={ansB}
+                                    InputLabelProps={{ shrink: true }}
+                                    onChange={handleAnswers}
+                                    style={{ width: '80%' }}
+                                />
+                            </div>
+                            <div style={{ flexDirection: 'row' }}>
+
+
+                                <Checkbox checked={c} onChange={handleChecked} name="c" />
+                                <TextField
+                                    id="ansC"
+                                    label="Answer"
+                                    value={ansC}
+                                    InputLabelProps={{ shrink: true }}
+                                    onChange={handleAnswers}
+                                    style={{ width: '80%' }}
+                                />
+                            </div>
+                            <div style={{ flexDirection: 'row' }}>
+
+                                <Checkbox checked={d} onChange={handleChecked} name="d" />
+                                <TextField
+                                    id="ansD"
+                                    label="Answer"
+                                    value={ansD}
+                                    InputLabelProps={{ shrink: true }}
+                                    onChange={handleAnswers}
+                                    style={{ width: '80%' }}
+                                />
+                            </div>
                         </div>
                         <Button
                             type="submit"
