@@ -178,6 +178,7 @@ export default function EditQuestions(props) {
                         <Button
                             type="submit"
                             variant="contained"
+                            style={{ marginTop: 5 }}
                         >
                             Update Game
                         </Button>
@@ -217,6 +218,7 @@ export default function EditQuestions(props) {
                                                 <Button
                                                     type="submit"
                                                     variant="contained"
+                                                    style={{ margin: 5 }}
                                                     onClick={() => {
                                                         history.push('../updateQuestion/' + row._id)
                                                     }}
@@ -288,6 +290,7 @@ export default function EditQuestions(props) {
                         <Button
                             type="submit"
                             variant="contained"
+                            style={{ marginTop: 5 }}
                         >
                             Create Question
                         </Button>

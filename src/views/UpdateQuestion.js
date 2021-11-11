@@ -194,6 +194,7 @@ export default function UpdateQuestion(props) {
                         <Button
                             type="submit"
                             variant="contained"
+                            style={{ marginTop: 5 }}
                         >
                             Update Question
                         </Button>

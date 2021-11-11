@@ -42,6 +42,7 @@ export default function EditGame() {
                 <Button
                     type="submit"
                     variant="contained"
+                    style={{ marginTop: 5 }}
                 >
                     Create Game
                 </Button>

@@ -116,6 +116,7 @@ export default function GameSelection(props) {
                             variant="contained"
                             onClick={() => history.push('/questions/' + gameId)}
                             disabled={!gameId}
+                            style={{ margin: 5 }}
                         >
                             Edit Game
                         </Button>
@@ -126,6 +127,7 @@ export default function GameSelection(props) {
                                 setDeleteDialog(true);
                             }}
                             disabled={!gameId}
+                            style={{ margin: 5 }}
                         >
                             Delete Game
                         </Button>
@@ -136,6 +138,7 @@ export default function GameSelection(props) {
                         variant="contained"
                         onClick={() => history.push('/quiz/' + gameId)}
                         disabled={!gameId}
+                        style={{ margin: 5 }}
                     >
                         Play
                     </Button>
