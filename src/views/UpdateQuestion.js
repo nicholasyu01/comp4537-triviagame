@@ -139,6 +139,7 @@ export default function UpdateQuestion(props) {
                                 value={questionName}
                                 InputLabelProps={{ shrink: true }}
                                 onChange={handleQuestionName}
+                                style={{ width: '90%' }}
 
                             />
                             <div style={{ flexDirection: 'row' }}>

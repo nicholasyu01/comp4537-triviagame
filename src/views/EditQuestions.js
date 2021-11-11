@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
     Container, Button, Typography, List, ListItem, ListItemText, Checkbox,
-    Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, CircularProgress
+    Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, CircularProgress,
+    Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 } from "@mui/material";
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
@@ -155,7 +156,8 @@ export default function EditQuestions(props) {
             style={{
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center"
+                alignItems: "center",
+                marginTop: 50
             }}
         >
             {loading ?
@@ -184,52 +186,67 @@ export default function EditQuestions(props) {
                             null
                         }
                     </form>
-                    <List >
-                        {questions?.map((row, key) => (
-                            <ListItem key={key}>
-                                <ListItemText
-                                    primary={<b>Q. {row.question}</b>}
-                                />
+                    <TableContainer sx={{ maxHeight: 200 }}>
+                        <Table stickyHeader aria-label="sticky table">
+                            <TableBody>
+                                {questions?.map((row, key) => {
+                                    return (
+                                        <>
+                                            <TableRow key={row.code}>
+                                                <TableCell key={row.id} align={row.align}>
+                                                    <b>Q.{row.question}</b>
+                                                </TableCell>
+                                                {row.options.map((o) => {
+                                                    return (
+                                                        <>
+                                                            {
+                                                                o.correct ?
+                                                                    <TableCell key={o.id} align={o.align}>
+                                                                        <b>&#10004; </b><i>{o.answer}</i>
+                                                                    </TableCell>
+                                                                    :
+                                                                    <TableCell key={o.id} align={o.align}>
+                                                                        <b>&#x58; </b><i>{o.answer}</i>
+                                                                    </TableCell>
 
-                                {row.options.map((row) => (
-                                    <>
-                                        {
-                                            row.correct ?
-                                                <ListItemText><b>&#10004;</b>: <i>{row.answer}</i></ListItemText>
-                                                :
-                                                <ListItemText><b>&#x58;</b>: <i>{row.answer}</i></ListItemText>
+                                                            }
 
-                                        }
-                                    </>
-                                ))}
-                                <Button
-                                    type="submit"
-                                    variant="contained"
-                                    onClick={() => {
-                                        history.push('../updateQuestion/' + row._id)
-                                    }}
-                                >
-                                    Edit
-                                </Button>
-                                <Button
-                                    type="submit"
-                                    variant="contained"
-                                    onClick={() => {
-                                        setDeleteQuestion(row);
-                                        setDeleteDialog(true);
-                                    }}
-                                >
-                                    Delete
-                                </Button>
-                            </ListItem>
-                        ))}
-                    </List>
+                                                        </>
+                                                    );
+                                                })}
+                                                <Button
+                                                    type="submit"
+                                                    variant="contained"
+                                                    onClick={() => {
+                                                        history.push('../updateQuestion/' + row._id)
+                                                    }}
+                                                >
+                                                    Edit
+                                                </Button>
+                                                <Button
+                                                    type="submit"
+                                                    variant="contained"
+                                                    onClick={() => {
+                                                        setDeleteQuestion(row);
+                                                        setDeleteDialog(true);
+                                                    }}
+                                                >
+                                                    Delete
+                                                </Button>
+                                            </TableRow>
+                                        </>
+                                    );
+                                })}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
                     <form onSubmit={onSubmit} id="questionsForm">
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
                             <TextField
                                 // className={classes.formControl}
                                 id="question"
                                 label="Question"
+                                style={{ width: '90%' }}
                             />
                             <div style={{ flexDirection: 'row' }}>
                                 <Checkbox checked={a} onChange={handleChange} name="a" />
