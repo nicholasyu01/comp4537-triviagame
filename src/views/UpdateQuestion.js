@@ -5,7 +5,7 @@ import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import { useHistory } from 'react-router-dom';
 
-const QUESTION_ENDPOINT = 'https://comp4537triviagame-api.herokuapp.com/api/question/';
+const QUESTION_ENDPOINT = 'https://comp4537triviagame-api.herokuapp.com/api/v1/question/';
 
 // Create Button component.
 export default function UpdateQuestion(props) {

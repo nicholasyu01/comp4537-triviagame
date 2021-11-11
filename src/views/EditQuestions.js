@@ -8,10 +8,10 @@ import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
-const QUESTION_ENDPOINT = 'https://comp4537triviagame-api.herokuapp.com/api/question/';
-const QUESTION_ADD_ENDPOINT = 'https://comp4537triviagame-api.herokuapp.com/api/question/add/';
-const QUESTION_GAME_ENDPOINT = 'https://comp4537triviagame-api.herokuapp.com/api/question/game/';
-const GAME_ENDPOINT = 'https://comp4537triviagame-api.herokuapp.com/api/game/';
+const QUESTION_ENDPOINT = 'https://comp4537triviagame-api.herokuapp.com/api/v1/question/';
+const QUESTION_ADD_ENDPOINT = 'https://comp4537triviagame-api.herokuapp.com/api/v1/question/add/';
+const QUESTION_GAME_ENDPOINT = 'https://comp4537triviagame-api.herokuapp.com/api/v1/question/game/';
+const GAME_ENDPOINT = 'https://comp4537triviagame-api.herokuapp.com/api/v1/game/';
 
 // Component for editing questions page.
 export default function EditQuestions(props) {

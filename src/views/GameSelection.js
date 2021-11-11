@@ -53,17 +53,17 @@ export default function GameSelection(props) {
     ];
 
     const handleDelete = () => {
-        axios.delete('https://comp4537triviagame-api.herokuapp.com/api/game/' + gameId)
+        axios.delete('https://comp4537triviagame-api.herokuapp.com/api/v1/game/' + gameId)
             .then(game => {
                 // delete questions of the game
-                axios.delete('https://comp4537triviagame-api.herokuapp.com/api/question/game/delete/' + gameId)
+                axios.delete('https://comp4537triviagame-api.herokuapp.com/api/question/game/v1/delete/' + gameId)
                     .then(q => {
                     })
                     .catch(function (error) {
                         console.log(error);
                     })
                 // get game data list
-                axios.get('https://comp4537triviagame-api.herokuapp.com/api/game')
+                axios.get('https://comp4537triviagame-api.herokuapp.com/api/v1/game')
                     .then(games => {
                         setGameData(games.data)
                     })
@@ -77,7 +77,7 @@ export default function GameSelection(props) {
 
     // On load, sets quizzes in list onto the component's list.
     useEffect(() => {
-        axios.get('https://comp4537triviagame-api.herokuapp.com/api/game')
+        axios.get('https://comp4537triviagame-api.herokuapp.com/api/v1/game')
             .then(games => {
                 setGameData(games.data)
                 setLoading(false)
