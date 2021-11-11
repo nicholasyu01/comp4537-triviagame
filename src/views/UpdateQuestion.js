@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Button, Typography, List, ListItem, ListItemText, Checkbox } from "@mui/material";
+import { Container, Button, Typography, List, ListItem, ListItemText, Checkbox, CircularProgress } from "@mui/material";
 import EditGame from './EditGame';
 import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
@@ -14,6 +14,7 @@ export default function UpdateQuestion(props) {
     const [questionId, setQuestionId] = useState(rest.match.params.id);
     const [question, setQuestion] = useState([]);
     const [questionName, setQuestionName] = useState();
+    const [loading, setLoading] = useState(true);
     const [answers, setAnswers] = useState({
         ansA: '',
         ansB: '',
@@ -110,6 +111,7 @@ export default function UpdateQuestion(props) {
                     ansC: q.data.options[2].answer,
                     ansD: q.data.options[3].answer
                 })
+                setLoading(false)
             })
             .catch(function (error) {
                 console.log(error);
@@ -124,63 +126,68 @@ export default function UpdateQuestion(props) {
                 alignItems: "center"
             }}
         >
-            <Container>
-                <form onSubmit={onSubmit} id="questionsForm">
-                    <div>
-                        <TextField
-                            // className={classes.formControl}
-                            id="question"
-                            label="Question"
-                            value={questionName}
-                            InputLabelProps={{ shrink: true }}
-                            onChange={handleQuestionName}
-                        />
-                        <Checkbox checked={a} onChange={handleChecked} name="a" />
-                        <TextField
-                            // className={classes.formControl}
-                            id="ansA"
-                            label="Answer"
-                            value={ansA}
-                            InputLabelProps={{ shrink: true }}
-                            onChange={handleAnswers}
-                        />
-                        <Checkbox checked={b} onChange={handleChecked} name="b" />
-                        <TextField
-                            // className={classes.formControl}
-                            id="ansB"
-                            label="Answer"
-                            value={ansB}
-                            InputLabelProps={{ shrink: true }}
-                            onChange={handleAnswers}
-                        />
-                        <Checkbox checked={c} onChange={handleChecked} name="c" />
-                        <TextField
-                            // className={classes.formControl}
-                            id="ansC"
-                            label="Answer"
-                            value={ansC}
-                            InputLabelProps={{ shrink: true }}
-                            onChange={handleAnswers}
-                        />
-                        <Checkbox checked={d} onChange={handleChecked} name="d" />
-                        <TextField
-                            // className={classes.formControl}
-                            id="ansD"
-                            label="Answer"
-                            value={ansD}
-                            InputLabelProps={{ shrink: true }}
-                            onChange={handleAnswers}
-                        />
+            {loading ?
+                <CircularProgress />
+                :
 
-                    </div>
-                    <Button
-                        type="submit"
-                        variant="contained"
-                    >
-                        Update Question
-                    </Button>
-                </form>
-            </Container>
+                <Container>
+                    <form onSubmit={onSubmit} id="questionsForm">
+                        <div>
+                            <TextField
+                                // className={classes.formControl}
+                                id="question"
+                                label="Question"
+                                value={questionName}
+                                InputLabelProps={{ shrink: true }}
+                                onChange={handleQuestionName}
+                            />
+                            <Checkbox checked={a} onChange={handleChecked} name="a" />
+                            <TextField
+                                // className={classes.formControl}
+                                id="ansA"
+                                label="Answer"
+                                value={ansA}
+                                InputLabelProps={{ shrink: true }}
+                                onChange={handleAnswers}
+                            />
+                            <Checkbox checked={b} onChange={handleChecked} name="b" />
+                            <TextField
+                                // className={classes.formControl}
+                                id="ansB"
+                                label="Answer"
+                                value={ansB}
+                                InputLabelProps={{ shrink: true }}
+                                onChange={handleAnswers}
+                            />
+                            <Checkbox checked={c} onChange={handleChecked} name="c" />
+                            <TextField
+                                // className={classes.formControl}
+                                id="ansC"
+                                label="Answer"
+                                value={ansC}
+                                InputLabelProps={{ shrink: true }}
+                                onChange={handleAnswers}
+                            />
+                            <Checkbox checked={d} onChange={handleChecked} name="d" />
+                            <TextField
+                                // className={classes.formControl}
+                                id="ansD"
+                                label="Answer"
+                                value={ansD}
+                                InputLabelProps={{ shrink: true }}
+                                onChange={handleAnswers}
+                            />
+
+                        </div>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                        >
+                            Update Question
+                        </Button>
+                    </form>
+                </Container>
+            }
         </div>
 
     );

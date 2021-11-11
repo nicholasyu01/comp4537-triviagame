@@ -13,7 +13,6 @@ import Edit from './views/Edit';
 import EditGame from './views/EditGame';
 import EditQuestions from './views/EditQuestions';
 import UpdateQuestion from './views/UpdateQuestion';
-import CssBaseline from '@material-ui/core/CssBaseline';
 
 const hist = createBrowserHistory();
 
@@ -39,7 +38,7 @@ ReactDOM.render(
       <Route path="/questions/:id" render={(props) => <EditQuestions {...props} />}></Route>
       <Route path="/updateQuestion/:id" render={(props) => <UpdateQuestion {...props} />}></Route>
       <Route path="/edit/:id" render={(props) => <Edit {...props} />}></Route>
-      <Redirect from="/" to="/TriviaGame" />
+      <Redirect from="*" to="/TriviaGame" />
     </Switch>
   </Router>,
   document.getElementById("root")

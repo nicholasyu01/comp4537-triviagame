@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { Container, Button, Typography, Box } from "@mui/material";
+import { Container, Button, Typography, Box, CircularProgress } from "@mui/material";
+import { useHistory } from 'react-router-dom';
 
 // Component for a Quiz. Has states for current question in the quiz, a boolean for 
 // if a quiz (game) is over, quiz score, quiz id, and a list of all quiz questions.
@@ -10,7 +11,9 @@ export default function Quiz(props) {
     const [score, setScore] = useState(0);
     const { ...rest } = props;
     const [id, setId] = useState(rest.match.params.id);
-    const [questions, setQuestions] = useState([])
+    const [questions, setQuestions] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const history = useHistory();
 
     // If question is correct, increment score by one and set current question to next question. 
     // If no next question, end game.
@@ -30,7 +33,8 @@ export default function Quiz(props) {
     useEffect(() => {
         axios.get('https://comp4537triviagame-api.herokuapp.com/api/question/game/' + id)
             .then(questions => {
-                setQuestions(questions.data)
+                setQuestions(questions.data);
+                setLoading(false);
             })
             .catch(function (error) {
                 console.log(error);
@@ -70,52 +74,72 @@ export default function Quiz(props) {
     // Returned component.
     return (
         <div style={divStyle}>
-            <Container>
-                <div>
-                    {
-                        isEndQuiz ?
-                            <div style={divStyle}>
-                                <Typography
-                                    variant="h4"
-                                    className="score-section">
-                                    Final Score: {score}/{questions?.length}
-                                </Typography>
-                            </div>
-                            :
-                            <>
-                                <Typography variant="h5" className="question-section">
-                                    <div style={divStyle} className="question-count">
-                                        <span>Question {currentQuestion + 1}</span>/{questions?.length}
-                                    </div>
-                                    <div style={divStyle} className="question-text">
-                                        {questions[currentQuestion]?.question}
-                                    </div>
-                                </Typography>
+            {
+                loading ?
+                    <CircularProgress />
+                    :
+                    <Container>
+                        <>
+                            {
+                                isEndQuiz ?
+                                    <div style={divStyle}>
+                                        <Typography
+                                            variant="h4"
+                                            className="score-section">
+                                            Final Score: {score}/{questions?.length}
+                                        </Typography>
+                                        <Button
+                                            color="primary"
+                                            variant="contained"
+                                            onClick={() => history.push('/TriviaGame')}
+                                        >
+                                            Home
+                                        </Button>
+                                        <Button
+                                            color="primary"
+                                            variant="contained"
+                                            onClick={() => history.go(0)}
+                                        >
+                                            Play Again
+                                        </Button>
 
-                                <div style={divStyle}>
-                                    <Typography variant="h5" className="answer-section">
+                                    </div>
+                                    :
+                                    <>
+                                        <Typography variant="h5" className="question-section">
+                                            <div style={divStyle} className="question-count">
+                                                <span>Question {currentQuestion + 1}</span>/{questions?.length}
+                                            </div>
+                                            <div style={divStyle} className="question-text">
+                                                {questions[currentQuestion]?.question}
+                                            </div>
+                                        </Typography>
 
-                                        <div style={optionStyle}>
-                                            {questions[currentQuestion]?.options.map((a, index) => (
-                                                <div style={buttonDivStyle}>
-                                                    <p style={optionLetterStyle}>{String.fromCharCode(65 + index)}.</p>
-                                                    <Button
-                                                        style={buttonStyle}
-                                                        variant="contained"
-                                                        onClick={() => handleAnswerOptionClick(a.correct)}
-                                                    >
-                                                        {a.answer}
-                                                    </Button>
+                                        <div style={divStyle}>
+                                            <Typography variant="h5" className="answer-section">
+
+                                                <div style={optionStyle}>
+                                                    {questions[currentQuestion]?.options.map((a, index) => (
+                                                        <div style={buttonDivStyle}>
+                                                            <p style={optionLetterStyle}>{String.fromCharCode(65 + index)}.</p>
+                                                            <Button
+                                                                style={buttonStyle}
+                                                                variant="contained"
+                                                                onClick={() => handleAnswerOptionClick(a.correct)}
+                                                            >
+                                                                {a.answer}
+                                                            </Button>
+                                                        </div>
+                                                    ))}
                                                 </div>
-                                            ))}
-                                        </div>
 
-                                    </Typography>
-                                </div>
-                            </>
-                    }
-                </div>
-            </Container>
+                                            </Typography>
+                                        </div>
+                                    </>
+                            }
+                        </>
+                    </Container>
+            }
         </div >
     );
 }

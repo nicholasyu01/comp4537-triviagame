@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { DataGrid } from '@mui/x-data-grid';
 import {
-    Container, Button, Typography, List, ListItem, ListItemText, Checkbox,
-    Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions
+    Container, Typography, List, ListItem, ListItemText, Checkbox,
+    Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Box
 } from "@mui/material";
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+
 
 // Component for selecting quiz. Has states for currently selected quiz and quiz data.
 export default function GameSelection(props) {
@@ -16,6 +18,7 @@ export default function GameSelection(props) {
     const [deleteDialog, setDeleteDialog] = useState(false);
     const [deleteQuestion, setDeleteQuestion] = useState([]);
     const { editMode } = props;
+    const [loading, setLoading] = useState(true);
 
     const handleClose = () => {
         setDeleteDialog(false);
@@ -29,49 +32,24 @@ export default function GameSelection(props) {
             headerAlign: 'center',
             width: 140,
         },
-        {
-            headerName: 'Theme',
-            field: 'theme',
-            headerAlign: 'center',
-            width: 140,
-        },
-        {
-            headerName: 'Questions',
-            field: 'numQuestions',
-            headerAlign: 'center',
-            width: 140,
-        },
-        {
-            headerName: 'Date',
-            field: 'date',
-            headerAlign: 'center',
-            width: 140,
-        },
-    ];
-
-    // UNUSED
-    const rows = [
-        {
-            id: 1,
-            gameName: 'Science',
-            theme: 'education',
-            numQuestions: '5',
-            date: '2020'
-        },
-        {
-            id: 1,
-            gameName: 'Math',
-            theme: 'education',
-            numQuestions: '4',
-            date: '2020'
-        },
-        {
-            id: 1,
-            gameName: 'christmas',
-            theme: 'holiday',
-            numQuestions: '6',
-            date: '2020'
-        },
+        // {
+        //     headerName: 'Theme',
+        //     field: 'theme',
+        //     headerAlign: 'center',
+        //     width: 140,
+        // },
+        // {
+        //     headerName: 'Questions',
+        //     field: 'numQuestions',
+        //     headerAlign: 'center',
+        //     width: 140,
+        // },
+        // {
+        //     headerName: 'Date',
+        //     field: 'date',
+        //     headerAlign: 'center',
+        //     width: 140,
+        // },
     ];
 
     const handleDelete = () => {
@@ -102,6 +80,7 @@ export default function GameSelection(props) {
         axios.get('https://comp4537triviagame-api.herokuapp.com/api/game')
             .then(games => {
                 setGameData(games.data)
+                setLoading(false)
             })
             .catch(function (error) {
                 console.log(error);
@@ -110,44 +89,52 @@ export default function GameSelection(props) {
 
     // Returns the component.
     return (
-        <div style={{ height: 400, width: '100%' }}>
-            <DataGrid
-                rows={gameData}
-                columns={columns}
-                disableColumnFilter={true}
-                disableColumnMenu={true}
-                hideFooter={true}
-                // loading={true}
-                getRowId={(row) => row._id}
-                onRowClick={(event) => {
-                    setGameId(event.id)
-                    setGameName(event.gameName)
-                }}
-            />
+        <Container>
+            <div style={{
+                height: 400, width: '100%'
+            }}>
+                <DataGrid
+                    rows={gameData}
+                    columns={columns}
+                    disableColumnFilter={true}
+                    disableColumnMenu={true}
+                    hideFooter={true}
+                    loading={loading}
+                    getRowId={(row) => row._id}
+                    onRowClick={(event) => {
+                        setGameId(event.id)
+                        setGameName(event.gameName)
+                    }}
+                />
+            </div>
+
             {
                 editMode ?
-                    <div>
+                    <>
                         <Button
-                            onClick={() => history.push('/questions/' + gameId)}
+                            color="primary"
                             variant="contained"
+                            onClick={() => history.push('/questions/' + gameId)}
                             disabled={!gameId}
                         >
                             Edit Game
                         </Button>
                         <Button
+                            color="secondary"
+                            variant="contained"
                             onClick={() => {
                                 setDeleteDialog(true);
                             }}
-                            variant="contained"
                             disabled={!gameId}
                         >
                             Delete Game
                         </Button>
-                    </div>
+                    </>
                     :
                     <Button
-                        onClick={() => history.push('/quiz/' + gameId)}
+                        color="primary"
                         variant="contained"
+                        onClick={() => history.push('/quiz/' + gameId)}
                         disabled={!gameId}
                     >
                         Play
@@ -170,6 +157,6 @@ export default function GameSelection(props) {
                     <Button onClick={handleDelete}>Delete</Button>
                 </DialogActions>
             </Dialog>
-        </div >
+        </Container>
     );
 }
