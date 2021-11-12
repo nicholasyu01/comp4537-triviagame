@@ -4,6 +4,7 @@ import EditGame from './EditGame';
 import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import { useHistory } from 'react-router-dom';
+import updateRequest from "../utils/updateRequest";
 
 const QUESTION_ENDPOINT = 'https://comp4537triviagame-api.herokuapp.com/api/v1/question/';
 
@@ -83,6 +84,7 @@ export default function UpdateQuestion(props) {
                 }
             })
             .then(question => {
+                updateRequest('618de52fd986f80f3ba925fe');
                 if (question) {
                     // TODO add success feedback
                     history.goBack();
@@ -97,6 +99,7 @@ export default function UpdateQuestion(props) {
     useEffect(() => {
         axios.get(QUESTION_ENDPOINT + questionId)
             .then(q => {
+                updateRequest('618de4fad986f80f3ba925fd');
                 setQuestion(q.data)
                 setQuestionName(q.data.question)
                 setOptions({

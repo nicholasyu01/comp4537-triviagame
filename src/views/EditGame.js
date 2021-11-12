@@ -3,6 +3,7 @@ import { Container, Button, Typography } from "@mui/material";
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import updateRequest from "../utils/updateRequest";
 
 // Component for Editing Quiz
 export default function EditGame() {
@@ -21,6 +22,7 @@ export default function EditGame() {
                 if (game) {
                     history.push('/questions/' + game.data._id)
                     console.log('success')
+                    updateRequest('618de4cdd986f80f3ba925fc')
                 } else {
                     console.log('fail')
                 }

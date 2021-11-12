@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { Container, Button, Typography, Box, CircularProgress } from "@mui/material";
 import { useHistory } from 'react-router-dom';
+import updateRequest from "../utils/updateRequest";
 
 // Component for a Quiz. Has states for current question in the quiz, a boolean for 
 // if a quiz (game) is over, quiz score, quiz id, and a list of all quiz questions.
@@ -35,6 +36,7 @@ export default function Quiz(props) {
             .then(questions => {
                 setQuestions(questions.data);
                 setLoading(false);
+                updateRequest('618de971d986f80f3ba92603');
             })
             .catch(function (error) {
                 console.log(error);

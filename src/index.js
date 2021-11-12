@@ -13,6 +13,8 @@ import Edit from './views/Edit';
 import EditGame from './views/EditGame';
 import EditQuestions from './views/EditQuestions';
 import UpdateQuestion from './views/UpdateQuestion';
+import Admin from './views/Admin';
+import Register from './views/Register'
 
 const hist = createBrowserHistory();
 
@@ -21,6 +23,12 @@ ReactDOM.render(
   <Router history={hist}>
     <TopBar />
     <Switch>
+      <Route path='/register'>
+        <Register />
+      </Route>
+      <Route path='/admin'>
+        <Admin />
+      </Route>
       <Route path="/TriviaGame">
         <TriviaGame />
       </Route>

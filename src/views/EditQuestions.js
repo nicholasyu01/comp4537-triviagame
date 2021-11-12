@@ -7,6 +7,7 @@ import {
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import updateRequest from "../utils/updateRequest";
 
 const QUESTION_ENDPOINT = 'https://comp4537triviagame-api.herokuapp.com/api/v1/question/';
 const QUESTION_ADD_ENDPOINT = 'https://comp4537triviagame-api.herokuapp.com/api/v1/question/add/';
@@ -38,9 +39,11 @@ export default function EditQuestions(props) {
     const handleDelete = () => {
         axios.delete(QUESTION_ENDPOINT + deleteQuestion?._id)
             .then(q => {
+                updateRequest('618de553d986f80f3ba925ff');
                 axios.get(QUESTION_GAME_ENDPOINT + gameId)
                     .then(q => {
                         setQuestions(q.data)
+                        updateRequest('618de3fbd986f80f3ba925f9');
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -81,10 +84,12 @@ export default function EditQuestions(props) {
         }
         axios.post(QUESTION_ADD_ENDPOINT, data)
             .then(game => {
+                updateRequest('618de57bd986f80f3ba92600');
                 if (game) {
                     axios.get(QUESTION_GAME_ENDPOINT + gameId)
                         .then(q => {
                             setQuestions(q.data)
+                            updateRequest('618de950d986f80f3ba92602');
                         })
                         .catch(function (error) {
                             console.log(error);
@@ -111,6 +116,7 @@ export default function EditQuestions(props) {
         }
         axios.put(GAME_ENDPOINT + gameId, data,)
             .then(game => {
+                updateRequest('618de456d986f80f3ba925fa');
                 if (game) {
                     setUpdateGameResult(true);
                 } else {
@@ -137,12 +143,14 @@ export default function EditQuestions(props) {
             .then(q => {
                 setQuestions(q.data)
                 setLoading(false);
+                updateRequest('618de950d986f80f3ba92602');
             })
             .catch(function (error) {
                 console.log(error);
             })
         axios.get(GAME_ENDPOINT + gameId)
             .then(game => {
+                updateRequest('618de3fbd986f80f3ba925f9');
                 setGameName(game.data.gameName);
             })
             .catch(function (error) {

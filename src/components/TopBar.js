@@ -24,6 +24,12 @@ export default function TopBar() {
                 </Typography>
                 <Button
                     color="inherit"
+                    onClick={() => history.push('./admin')}
+                >
+                    Admin
+                </Button>
+                <Button
+                    color="inherit"
                     onClick={() => history.goBack()}
                 >
                     Back

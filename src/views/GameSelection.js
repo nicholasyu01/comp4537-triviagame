@@ -7,6 +7,7 @@ import {
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
+import updateRequest from "../utils/updateRequest";
 
 
 // Component for selecting quiz. Has states for currently selected quiz and quiz data.
@@ -55,9 +56,11 @@ export default function GameSelection(props) {
     const handleDelete = () => {
         axios.delete('https://comp4537triviagame-api.herokuapp.com/api/v1/game/' + gameId)
             .then(game => {
+                updateRequest('618de4a2d986f80f3ba925fb');
                 // delete questions of the game
                 axios.delete('https://comp4537triviagame-api.herokuapp.com/api/question/game/v1/delete/' + gameId)
                     .then(q => {
+                        updateRequest('618de971d986f80f3ba92603');
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -65,6 +68,7 @@ export default function GameSelection(props) {
                 // get game data list
                 axios.get('https://comp4537triviagame-api.herokuapp.com/api/v1/game')
                     .then(games => {
+                        updateRequest('618dc2eb1c9dc9e9dd874e33');
                         setGameData(games.data)
                     })
                     .catch(function (error) {
@@ -81,6 +85,7 @@ export default function GameSelection(props) {
             .then(games => {
                 setGameData(games.data)
                 setLoading(false)
+                updateRequest('618dc2eb1c9dc9e9dd874e33');
             })
             .catch(function (error) {
                 console.log(error);
