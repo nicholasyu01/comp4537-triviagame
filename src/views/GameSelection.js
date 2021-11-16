@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import updateRequest from "../utils/updateRequest";
+import historyPush from "../utils/historyPush";
 
 
 // Component for selecting quiz. Has states for currently selected quiz and quiz data.
@@ -108,7 +109,7 @@ export default function GameSelection(props) {
                     getRowId={(row) => row._id}
                     onRowClick={(event) => {
                         setGameId(event.id)
-                        setGameName(event.gameName)
+                        setGameName(event.row.gameName)
                     }}
                 />
             </div>
@@ -119,7 +120,10 @@ export default function GameSelection(props) {
                         <Button
                             color="primary"
                             variant="contained"
-                            onClick={() => history.push('/questions/' + gameId)}
+                            onClick={() => {
+                                history.push('/questions/' + gameId)
+                                // historyPush(history, '/questions/' + gameId);
+                            }}
                             disabled={!gameId}
                             style={{ margin: 5 }}
                         >

@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import updateRequest from "../utils/updateRequest";
+import historyPush from "../utils/historyPush";
 
 // Component for Editing Quiz
 export default function EditGame() {

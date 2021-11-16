@@ -6,6 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import { useHistory } from 'react-router-dom';
+import historyPush from "../utils/historyPush";
 
 
 export default function TopBar() {
@@ -17,14 +18,20 @@ export default function TopBar() {
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     <Button
                         color="inherit"
-                        onClick={() => history.push('/TriviaGame')}
+                        onClick={() => {
+                            // history.push('/TriviaGame')
+                            historyPush(history, '/TriviaGame');
+                        }}
                     >
                         <Typography variant="h5">Trivia Game</Typography>
                     </Button>
                 </Typography>
                 <Button
                     color="inherit"
-                    onClick={() => history.push('./admin')}
+                    onClick={() => {
+                        // history.push('/admin')
+                        historyPush(history, '/admin');
+                    }}
                 >
                     Admin
                 </Button>

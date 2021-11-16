@@ -228,7 +228,7 @@ export default function EditQuestions(props) {
                                                     variant="contained"
                                                     style={{ margin: 5 }}
                                                     onClick={() => {
-                                                        history.push('../updateQuestion/' + row._id)
+                                                        history.push('/updateQuestion/' + row._id)
                                                     }}
                                                 >
                                                     Edit
