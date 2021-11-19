@@ -3,6 +3,12 @@ import axios from 'axios';
 import { Container, Button, Typography, Box, CircularProgress } from "@mui/material";
 import { useHistory } from 'react-router-dom';
 import updateRequest from "../utils/updateRequest";
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 // Component for a Quiz. Has states for current question in the quiz, a boolean for 
 // if a quiz (game) is over, quiz score, quiz id, and a list of all quiz questions.
@@ -15,6 +21,7 @@ export default function Quiz(props) {
     const [questions, setQuestions] = useState([]);
     const [loading, setLoading] = useState(true);
     const history = useHistory();
+    const [openAlert, setOpenAlert] = useState(false);
 
     // If question is correct, increment score by one and set current question to next question. 
     // If no next question, end game.
@@ -28,6 +35,18 @@ export default function Quiz(props) {
         } else {
             setIsEndQuiz(true);
         }
+    };
+
+    const handleCopyGame = () => {
+        navigator.clipboard.writeText(window.location.href);
+        setOpenAlert(true);
+    };
+
+    const handleCloseAlert = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAlert(false);
     };
 
     // On page load, set questions for selected quiz.
@@ -146,9 +165,23 @@ export default function Quiz(props) {
                                         </div>
                                     </>
                             }
+                            <div style={divStyle}>
+                                <Button
+                                    color="primary"
+                                    variant="contained"
+                                    onClick={handleCopyGame}
+                                >
+                                    Copy Game to Clipboard
+                                </Button>
+                            </div>
                         </>
                     </Container>
             }
+            <Snackbar open={openAlert} autoHideDuration={3000} onClose={handleCloseAlert}>
+                <Alert onClose={handleCloseAlert} severity="success" sx={{ width: '100%' }}>
+                    Game copied to clipboard.
+                </Alert>
+            </Snackbar>
         </div >
     );
 }
