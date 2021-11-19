@@ -9,6 +9,12 @@ import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import updateRequest from "../utils/updateRequest";
 import historyPush from "../utils/historyPush";
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 
 // Component for selecting quiz. Has states for currently selected quiz and quiz data.
@@ -21,6 +27,7 @@ export default function GameSelection(props) {
     const [deleteQuestion, setDeleteQuestion] = useState([]);
     const { editMode } = props;
     const [loading, setLoading] = useState(true);
+    const [openAlert, setOpenAlert] = useState(false);
 
     const handleClose = () => {
         setDeleteDialog(false);
@@ -54,10 +61,18 @@ export default function GameSelection(props) {
         // },
     ];
 
+    const handleCloseAlert = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAlert(false);
+    };
+
     const handleDelete = () => {
         axios.delete('https://comp4537triviagame-api.herokuapp.com/api/v1/game/' + gameId)
             .then(game => {
                 updateRequest('618de4a2d986f80f3ba925fb');
+                setOpenAlert(true);
                 // delete questions of the game
                 axios.delete('https://comp4537triviagame-api.herokuapp.com/api/question/game/v1/delete/' + gameId)
                     .then(q => {
@@ -169,6 +184,11 @@ export default function GameSelection(props) {
                     <Button onClick={handleDelete}>Delete</Button>
                 </DialogActions>
             </Dialog>
+            <Snackbar open={openAlert} autoHideDuration={3000} onClose={handleCloseAlert}>
+                <Alert onClose={handleCloseAlert} severity="success" sx={{ width: '100%' }}>
+                    Game was successfuly deleted.
+                </Alert>
+            </Snackbar>
         </Container>
     );
 }

@@ -5,9 +5,16 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import updateRequest from "../utils/updateRequest";
 import historyPush from "../utils/historyPush";
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 // Component for Editing Quiz
 export default function EditGame() {
+    const [openAlert, setOpenAlert] = useState(false);
 
     // History
     const history = useHistory();
@@ -15,6 +22,10 @@ export default function EditGame() {
     // IN PROGRESS
     const onSubmit = (event) => {
         event.preventDefault()
+        if (!event.target.gameName?.value) {
+            setOpenAlert(true)
+            return
+        }
         const data = {
             gameName: event.target.gameName.value,
         }
@@ -28,8 +39,18 @@ export default function EditGame() {
                     console.log('fail')
                 }
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                console.log(err)
+                setOpenAlert(true);
+            });
     }
+
+    const handleCloseAlert = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAlert(false);
+    };
 
     // Returns edit component
     return (
@@ -50,6 +71,11 @@ export default function EditGame() {
                     Create Game
                 </Button>
             </form>
+            <Snackbar open={openAlert} autoHideDuration={3000} onClose={handleCloseAlert}>
+                <Alert onClose={handleCloseAlert} severity="error" sx={{ width: '100%' }}>
+                    Error creating Game.
+                </Alert>
+            </Snackbar>
         </div>
     );
 }

@@ -5,8 +5,14 @@ import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import { useHistory } from 'react-router-dom';
 import updateRequest from "../utils/updateRequest";
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 const QUESTION_ENDPOINT = 'https://comp4537triviagame-api.herokuapp.com/api/v1/question/';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 // Create Button component.
 export default function UpdateQuestion(props) {
@@ -30,6 +36,8 @@ export default function UpdateQuestion(props) {
         d: false
     });
     const { a, b, c, d } = options;
+    const [openAlert, setOpenAlert] = useState(false);
+
     const handleChecked = (event) => {
         setOptions({
             ...options,
@@ -92,8 +100,19 @@ export default function UpdateQuestion(props) {
                     console.log('fail')
                 }
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                console.log(err)
+                setOpenAlert(true);
+            });
     }
+
+    const handleCloseAlert = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAlert(false);
+    };
+
 
     // On load, get question.
     useEffect(() => {
@@ -204,6 +223,11 @@ export default function UpdateQuestion(props) {
                     </form>
                 </Container>
             }
+            <Snackbar open={openAlert} autoHideDuration={3000} onClose={handleCloseAlert}>
+                <Alert onClose={handleCloseAlert} severity="error" sx={{ width: '100%' }}>
+                    Error updating Question.
+                </Alert>
+            </Snackbar>
         </div>
 
     );

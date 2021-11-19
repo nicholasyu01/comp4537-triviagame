@@ -5,10 +5,17 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import jwt_decode from "jwt-decode";
 import AdminTable from './AdminTable';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 // Create Button component.
 export default function Admin() {
     const [loggedIn, setLoggedIn] = useState(localStorage.getItem("jwtToken"));
+    const [openAlert, setOpenAlert] = useState(false);
 
     const history = useHistory();
     const onSubmit = (event) => {
@@ -26,11 +33,19 @@ export default function Admin() {
 
                 setLoggedIn(true)
             })
-            .catch(err =>
+            .catch(err => {
                 console.log(err)
+                setOpenAlert(true);
+            }
             );
     }
 
+    const handleCloseAlert = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAlert(false);
+    };
 
     // On load, get question.
     useEffect(() => {
@@ -84,6 +99,11 @@ export default function Admin() {
                         </Button>
                     </form>
             }
+            <Snackbar open={openAlert} autoHideDuration={3000} onClose={handleCloseAlert}>
+                <Alert onClose={handleCloseAlert} severity="error" sx={{ width: '100%' }}>
+                    Error Invalid Login.
+                </Alert>
+            </Snackbar>
         </div>
     );
 }
